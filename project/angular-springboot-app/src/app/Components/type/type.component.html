@@ -1,0 +1,62 @@
+<button type="button" class="btn btn-success" data-toggle="modal" data-target="#EditAddType" (click)="openModel()" style="margin: 50px;">Create New Type</button>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Name Type</th>
+      <th scope="col">Description</th>
+      <th scope="col" colspan="2">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let type of typeList">
+      <th scope="row">{{type.type_id}}</th>
+      <td>{{type.name}}</td>
+      <td>{{type.description}}</td>
+      <td>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#EditAddType" (click)="openModel(type)">Edit</button>
+      </td>
+      <td>
+        <button type="button" class="btn btn-danger" (click)="deleteType(type.type_id)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="EditAddType" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Type</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Exclude ID from the form -->
+        
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default">Type Name</span>
+          </div>
+          <input type="text" class="form-control" [(ngModel)]="newType.name">
+        </div>
+        
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default">Description</span>
+          </div>
+          <input type="text" class="form-control" [(ngModel)]="newType.description">
+        </div>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" *ngIf="creatingMode" (click)="createType()">Create Type</button>
+        <button type="button" class="btn btn-primary" *ngIf="!creatingMode" (click)="modifyType()">Modify Type</button>
+      </div>
+    </div>
+  </div>
+</div>

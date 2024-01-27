@@ -1,0 +1,62 @@
+<button type="button" class="btn btn-success" data-toggle="modal" data-target="#EditAddProjectAdmin" (click)="openModel()" style="margin: 50px;">Create New ProjectAdmin</button>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Name</th>
+      <th scope="col">Projects Name</th>
+      
+      <th scope="col" colspan="2">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let projectAdmin of projectAdminList">
+      <th scope="row">{{projectAdmin.projectAdmin_id}}</th>
+      <td>{{projectAdmin.name}}</td>
+      <td>{{projectAdmin.project.name}}</td>
+      
+      <!-- Actions column -->
+      <td>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#EditAddProjectAdmin" (click)="openModel(projectAdmin)">Edit</button>
+      </td>
+      <td>
+        <button type="button" class="btn btn-danger" (click)="deleteProjectAdmin(projectAdmin.projectAdmin_id)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<!-- Modal -->
+<div class="modal fade" id="EditAddProjectAdmin" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">ProjectAdmin</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="name">Name</span>
+          </div>
+          <input type="text" class="form-control" [(ngModel)]="newProjectAdmin.name">
+        </div><br>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="projectsSelect">Projects</label>
+          </div>
+          <select class="custom-select" id="projectsSelect" [(ngModel)]="projectsIdVar">
+            <option selected>Choose...</option>
+            <option *ngFor="let project of projectsList" [value]="project.projects_id">{{ project.projects_id }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" *ngIf="creatingMode" (click)="createProjectAdmin()">Create ProjectAdmin</button>
+        <button type="button" class="btn btn-primary" *ngIf="!creatingMode" (click)="modifyProjectAdmin()">Modify ProjectAdmin</button>
+      </div>
+    </div>
+  </div>
+</div>

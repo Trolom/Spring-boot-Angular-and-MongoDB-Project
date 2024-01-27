@@ -1,0 +1,73 @@
+<button type="button" class="btn btn-success" data-toggle="modal" data-target="#EditAddLocationProject" (click)="openModel()" style="margin: 50px;">Create New LocationProject</button>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Name LocationProject</th>
+      <th scope="col">Climate</th>
+      <th scope="col">Description</th>
+      <th scope="col">Resources Info</th>
+      <th scope="col" colspan="2">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let locationProject of locationProjectList">
+      <th scope="row">{{locationProject.locationProject_id}}</th>
+      <td>{{locationProject.climate}}</td>
+      <td>{{locationProject.description}}</td>
+      <td>{{locationProject.resources}}</td>
+      <td>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#EditAddLocationProject" (click)="openModel(locationProject)">Edit</button>
+      </td>
+      <td>
+        <button type="button" class="btn btn-danger" (click)="deleteLocationProject(locationProject.locationProject_id)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="EditAddLocationProject" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">LocationProject</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Exclude ID from the form -->
+        
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default">Climate</span>
+          </div>
+          <input type="text" class="form-control" [(ngModel)]="newLocationProject.climate">
+        </div>
+        
+        
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default">Description</span>
+          </div>
+          <input type="text" class="form-control" [(ngModel)]="newLocationProject.description">
+        </div>
+        
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default">Resources</span>
+          </div>
+          <input type="text" class="form-control" [(ngModel)]="newLocationProject.resources">
+        </div>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" *ngIf="creatingMode" (click)="createLocationProject()">Create LocationProject</button>
+        <button type="button" class="btn btn-primary" *ngIf="!creatingMode" (click)="modifyLocationProject()">Modify LocationProject</button>
+      </div>
+    </div>
+  </div>
+</div>

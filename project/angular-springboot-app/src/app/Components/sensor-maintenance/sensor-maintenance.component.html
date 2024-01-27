@@ -1,0 +1,103 @@
+<button type="button" class="btn btn-success" data-toggle="modal" data-target="#EditAddSensorMaintenance" (click)="openModel()" style="margin: 50px;">Create New SensorMaintenance</button>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Installation Date</th>
+      <th scope="col">Calibration Date</th>
+      <th scope="col">Status</th>
+      <th scope="col">Maintenance By</th>
+      <th scope="col">Sensor Id</th>
+      
+      <th scope="col" colspan="2">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let sensorMaintenance of sensorMaintenanceList">
+      <th scope="row">{{sensorMaintenance.sensorMaintenance_id}}</th>
+      <td>{{sensorMaintenance.installation_date}}</td>
+      <td>{{sensorMaintenance.calibration_date}}</td>
+      <td>{{sensorMaintenance.status}}</td>
+      <td>{{sensorMaintenance.maintenance_by}}</td>
+      <td>{{sensorMaintenance.sensor.sensor_id}}</td>
+      
+      <!-- Actions column -->
+      <td>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#EditAddSensorMaintenance" (click)="openModel(sensorMaintenance)">Edit</button>
+      </td>
+      <td>
+        <button type="button" class="btn btn-danger" (click)="deleteSensorMaintenance(sensorMaintenance.sensorMaintenance_id)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<!-- Modal -->
+<div class="modal fade" id="EditAddSensorMaintenance" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">SensorMaintenance</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      
+        <div class="input-group">
+  		<div class="input-group-prepend">
+   			 <span class="input-group-text" id="installation_date">Installation Date</span>
+  		</div>
+  			<input 
+    			type="text" 
+    			class="form-control" 
+    			[(ngModel)]="installation_date_string" 
+    			ngxMask="00-00-0000 00:00" 
+    			placeholder="MM-DD-YYYY HH:mm"
+  			/>
+		</div><br>
+
+		<div class="input-group">
+  			<div class="input-group-prepend">
+    			<span class="input-group-text" id="calibration_date">Calibration Date</span>
+  			</div>
+  			<input 
+    			type="text" 
+    			class="form-control" 
+    			[(ngModel)]="calibration_date_string" 
+    			ngxMask="00-00-0000 00:00" 
+    			placeholder="MM-DD-YYYY HH:mm"
+  			/>
+		</div><br>
+        
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="status">Status</span>
+          </div>
+          <input type="text" class="form-control" [(ngModel)]="newSensorMaintenance.status">
+        </div><br>
+        
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="maintenance_by">Maintenance By</span>
+          </div>
+          <input type="text" class="form-control" [(ngModel)]="newSensorMaintenance.maintenance_by">
+        </div><br>
+        
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="sensorSelect">Sensors</label>
+          </div>
+          <select class="custom-select" id="sensorSelect" [(ngModel)]="sensorIdVar">
+            <option selected>Choose...</option>
+            <option *ngFor="let sensor of sensorList" [value]="sensor.sensor_id">{{ sensor.sensor_id }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" *ngIf="creatingMode" (click)="createSensorMaintenance()">Create SensorMaintenance</button>
+        <button type="button" class="btn btn-primary" *ngIf="!creatingMode" (click)="modifySensorMaintenance()">Modify SensorMaintenance</button>
+      </div>
+    </div>
+  </div>
+</div>

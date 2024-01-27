@@ -1,0 +1,82 @@
+<button type="button" class="btn btn-success" data-toggle="modal" data-target="#EditAddEmployee" (click)="openModel()" style="margin: 50px;">Create New Employee</button>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Name</th>
+      <th scope="col">Position</th>
+      <th scope="col">Contract Details</th>
+      <th scope="col">Department Name</th>
+      
+      <th scope="col" colspan="2">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let employee of employeeList">
+      <th scope="row">{{employee.employee_id}}</th>
+      <td>{{employee.name}}</td>
+      <td>{{employee.position}}</td>
+      <td>{{employee.contract_details}}</td>
+      <td>{{employee.department.department_name}}</td>
+      
+      <!-- Actions column -->
+      <td>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#EditAddEmployee" (click)="openModel(employee)">Edit</button>
+      </td>
+      <td>
+        <button type="button" class="btn btn-danger" (click)="deleteEmployee(employee.employee_id)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<!-- Modal -->
+<div class="modal fade" id="EditAddEmployee" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Employee</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="name">Name</span>
+          </div>
+          <input type="text" class="form-control" [(ngModel)]="newEmployee.name">
+        </div><br>
+        
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="position">Position</span>
+          </div>
+          <input type="text" class="form-control" [(ngModel)]="newEmployee.position">
+        </div><br>
+        
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="contractDetails">Contract Details</span>
+          </div>
+          <input type="text" class="form-control" [(ngModel)]="newEmployee.contract_details">
+        </div><br>
+        
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="departmentSelect">Departments</label>
+          </div>
+          <select class="custom-select" id="departmentSelect" [(ngModel)]="departmentIdVar">
+            <option selected>Choose...</option>
+            <option *ngFor="let department of departmentList" [value]="department.department_id">{{ department.department_id }}</option>
+          </select>
+        </div>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" *ngIf="creatingMode" (click)="createEmployee()">Create Employee</button>
+        <button type="button" class="btn btn-primary" *ngIf="!creatingMode" (click)="modifyEmployee()">Modify Employee</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,78 @@
+<button type="button" class="btn btn-success" data-toggle="modal" data-target="#EditAddAddress" (click)="openModel()" style="margin: 50px;">Create New Address</button>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Street</th>
+      <th scope="col">Number</th>
+      <th scope="col">HQ</th>
+      <th scope="col">City Name</th>
+      
+      <th scope="col" colspan="2">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let address of addressList">
+      <th scope="row">{{address.address_id}}</th>
+      <td>{{address.street}}</td>
+      <td>{{address.number}}</td>
+      <td>{{address.is_HQ}}</td>
+      <td>{{address.city.name}}</td>
+      
+      <!-- Actions column -->
+      <td>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#EditAddAddress" (click)="openModel(address)">Edit</button>
+      </td>
+      <td>
+        <button type="button" class="btn btn-danger" (click)="deleteAddress(address.address_id)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<!-- Modal -->
+<div class="modal fade" id="EditAddAddress" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Address</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="street">Street</span>
+          </div>
+          <input type="text" class="form-control" [(ngModel)]="newAddress.street">
+        </div><br>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="number">Number</span>
+          </div>
+          <input type="text" class="form-control" [(ngModel)]="newAddress.number">
+        </div><br>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="hq">HQ</span>
+          </div>
+          <input type="text" class="form-control" [(ngModel)]="newAddress.is_HQ">
+        </div><br>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="citySelect">Cities</label>
+          </div>
+          <select class="custom-select" id="citySelect" [(ngModel)]="cityIdVar">
+            <option selected>Choose...</option>
+            <option *ngFor="let city of cityList" [value]="city.city_id">{{ city.city_id }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" *ngIf="creatingMode" (click)="createAddress()">Create Address</button>
+        <button type="button" class="btn btn-primary" *ngIf="!creatingMode" (click)="modifyAddress()">Modify Address</button>
+      </div>
+    </div>
+  </div>
+</div>

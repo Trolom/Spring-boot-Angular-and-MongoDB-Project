@@ -1,0 +1,81 @@
+<button type="button" class="btn btn-success" data-toggle="modal" data-target="#EditAddAccessAddress" (click)="openModel()" style="margin: 50px;">Create New AccessAddress</button>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Host</th>
+      <th scope="col">Port</th>
+      <th scope="col">Ap</th>
+      <th scope="col">Sensor Id</th>
+      
+      <th scope="col" colspan="2">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let accessAddress of accessAddressList">
+      <th scope="row">{{accessAddress.accessAddress_id}}</th>
+      <td>{{accessAddress.host}}</td>
+      <td>{{accessAddress.port}}</td>
+      <td>{{accessAddress.ap}}</td>
+      <td>{{accessAddress.sensor.sensor_id}}</td>
+      <td>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#EditAddAccessAddress" (click)="openModel(accessAddress)">Edit</button>
+      </td>
+      <td>
+        <button type="button" class="btn btn-danger" (click)="deleteAccessAddress(accessAddress.accessAddress_id)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="EditAddAccessAddress" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">AccessAddress</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="host">Host</span>
+          </div>
+          <input type="text" class="form-control" [(ngModel)]="newAccessAddress.host">
+        </div><br>
+        
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="port">Port</span>
+          </div>
+          <input type="text" class="form-control" [(ngModel)]="newAccessAddress.port">
+        </div><br>
+        
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="ap">Ap</span>
+          </div>
+          <input type="text" class="form-control" [(ngModel)]="newAccessAddress.ap">
+        </div><br>
+        
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="sensorSelect">Sensors</label>
+          </div>
+          <select class="custom-select" id="sensorSelect" [(ngModel)]="sensorIdVar">
+            <option selected>Choose...</option>
+            <option *ngFor="let sensor of sensorList" [value]="sensor.sensor_id">{{ sensor.sensor_id }}</option>
+          </select>
+        </div>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" *ngIf="creatingMode" (click)="createAccessAddress()">Create AccessAddress</button>
+        <button type="button" class="btn btn-primary" *ngIf="!creatingMode" (click)="modifyAccessAddress()">Modify AccessAddress</button>
+      </div>
+    </div>
+  </div>
+</div>

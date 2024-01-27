@@ -1,0 +1,70 @@
+<button type="button" class="btn btn-success" data-toggle="modal" data-target="#EditAddSensor" (click)="openModel()" style="margin: 50px;">Create New Sensor</button>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Value</th>
+      <th scope="col">Version</th>
+      <th scope="col">Type Name</th>
+      
+      <th scope="col" colspan="2">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let sensor of sensorList">
+      <th scope="row">{{sensor.sensor_id}}</th>
+      <td>{{sensor.value}}</td>
+      <td>{{sensor.version}}</td>
+      <td>{{sensor.type.name}}</td>
+      
+      <!-- Actions column -->
+      <td>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#EditAddSensor" (click)="openModel(sensor)">Edit</button>
+      </td>
+      <td>
+        <button type="button" class="btn btn-danger" (click)="deleteSensor(sensor.sensor_id)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<!-- Modal -->
+<div class="modal fade" id="EditAddSensor" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Sensor</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="value">Value</span>
+          </div>
+          <input type="text" class="form-control" [(ngModel)]="newSensor.value">
+        </div><br>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="version">Version</span>
+          </div>
+          <input type="text" class="form-control" [(ngModel)]="newSensor.version">
+        </div><br>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="typeSelect">Types</label>
+          </div>
+          <select class="custom-select" id="typeSelect" [(ngModel)]="typeIdVar">
+            <option selected>Choose...</option>
+            <option *ngFor="let type of typeList" [value]="type.type_id">{{ type.type_id }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" *ngIf="creatingMode" (click)="createSensor()">Create Sensor</button>
+        <button type="button" class="btn btn-primary" *ngIf="!creatingMode" (click)="modifySensor()">Modify Sensor</button>
+      </div>
+    </div>
+  </div>
+</div>
